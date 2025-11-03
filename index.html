@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>SplitIt – Full Stack Expense Sharing Platform (Spring Boot + Angular 18)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css" id="theme" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/monokai.css" />
+    <style>
+      .footer {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 0.6em;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- Slide 1 -->
+        <section>
+          <h1>💸 SplitIt</h1>
+          <h3>Full Stack Expense Sharing Platform (Spring Boot + Angular 18)</h3>
+          <p><strong>Dhruv Patel — Full Stack Java Developer (Toronto, ON)</strong></p>
+          <p><a href="mailto:dhruvp30.work@gmail.com">dhruvp30.work@gmail.com</a> |
+             <a href="https://github.com/Dhruv1030">github.com/Dhruv1030</a> |
+             <a href="https://dhruv-portfolio-qq2z.vercel.app/">Portfolio</a></p>
+        </section>
+
+        <!-- Problem -->
+        <section>
+          <h2>🎯 Problem Statement</h2>
+          <p>Managing shared expenses manually leads to confusion, errors, and delayed settlements.</p>
+          <p><strong>Goal:</strong> Create an automated, scalable, and secure platform to manage group expenses efficiently.</p>
+        </section>
+
+        <!-- Solution -->
+        <section>
+          <h2>💡 Solution Overview</h2>
+          <p><strong>SplitIt</strong> automates expense tracking, settlements, and analytics using a
+          distributed microservices architecture built with Spring Boot and Angular 18.</p>
+          <ul>
+            <li>Cloud-ready microservices design</li>
+            <li>Real-time updates via Kafka</li>
+            <li>Responsive Angular UI with Material Design</li>
+          </ul>
+        </section>
+
+        <!-- Architecture -->
+        <section>
+          <h2>🏗️ Architecture Overview</h2>
+          <pre><code class="bash" data-trim data-noescape>
+┌─────────────────────────────────────────────────────────────┐
+│                     API Gateway (8080)                      │
+│              Load Balancing & Circuit Breakers              │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+┌─────────────────────┴───────────────────────────────────────┐
+│              Discovery Server (Eureka - 8761)               │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+        ┌─────────────┼─────────────┬──────────────┐
+   ┌────▼───┐   ┌────▼───┐   ┌────▼───┐    ┌────▼────┐
+   │  User  │   │ Group  │   │Expense │    │Settlement│
+   │Service │   │Service │   │Service │    │ Service  │
+   │ (8081) │   │ (8082) │   │ (8083) │    │  (8084)  │
+   └────┬───┘   └────┬───┘   └────┬───┘    └────┬────┘
+        │            │            │              │
+   ┌────▼───┐   ┌───▼────┐   ┌───▼─────┐  ┌────▼────┐
+   │Payment │   │Notif.  │   │Analytics│  │ Zipkin  │
+   │Service │   │Service │   │ Service │  │ (9411)  │
+   │ (8086) │   │ (8085) │   │ (8087)  │  └─────────┘
+   └────────┘   └───┬────┘   └────┬────┘
+                    │             │
+              ┌─────▼─────┐  ┌───▼────┐
+              │   Kafka   │  │MongoDB │
+              │  (9092)   │  │(27017) │
+              └───────────┘  └────────┘
+                    │
+              ┌─────▼──────┐
+              │ PostgreSQL │
+              │   (5432)   │
+              └────────────┘
+          </code></pre>
+          <p><small>All services orchestrated with <strong>Docker Compose</strong> for easy local deployment.</small></p>
+        </section>
+
+        <!-- Backend -->
+        <section>
+          <h2>🧩 Backend Microservices</h2>
+          <ul>
+            <li><strong>User Service:</strong> Authentication & Profile</li>
+            <li><strong>Group Service:</strong> Group Creation & Membership</li>
+            <li><strong>Expense Service:</strong> Expense Tracking & Splitting</li>
+            <li><strong>Settlement Service:</strong> Debt Optimization</li>
+            <li><strong>Payment Service:</strong> Payment Gateway Integration</li>
+            <li><strong>Notification Service:</strong> Kafka Events</li>
+            <li><strong>Analytics Service:</strong> Spending Insights</li>
+          </ul>
+        </section>
+
+        <!-- Docker -->
+        <section>
+          <h2>🐳 Docker Orchestration</h2>
+          <pre><code class="bash" data-trim data-noescape>
+# Run all services
+docker-compose up -d
+
+# Check running containers
+docker-compose ps
+
+# View service logs
+docker-compose logs -f [service-name]
+
+# Stop all containers
+docker-compose down
+          </code></pre>
+          <p><small>Containerized all microservices with consistent network and environment variables.</small></p>
+        </section>
+
+        <!-- Database -->
+        <section>
+          <h2>🗄️ Database Design</h2>
+          <ul>
+            <li>Hybrid persistence model:</li>
+            <ul>
+              <li><strong>PostgreSQL:</strong> Core transactions</li>
+              <li><strong>MongoDB:</strong> Analytics & user activity</li>
+            </ul>
+            <li>Optimized queries via Spring Data JPA with caching & indexing</li>
+          </ul>
+        </section>
+
+        <!-- Frontend Overview -->
+        <section>
+          <h2>🎨 SplitIt Frontend Overview</h2>
+          <p>A modern, responsive web application built with <strong>Angular 18</strong> and <strong>Material Design</strong>.</p>
+          <ul>
+            <li>Framework: Angular 18 (Standalone Components)</li>
+            <li>UI Library: Angular Material</li>
+            <li>Language: TypeScript 5.5</li>
+            <li>State Mgmt: RxJS</li>
+            <li>Routing: Angular Router + Guards</li>
+            <li>Styling: SCSS with Material Theming</li>
+          </ul>
+        </section>
+
+        <!-- Frontend Architecture -->
+        <section>
+          <h2>⚙️ Frontend Architecture</h2>
+          <pre><code class="bash" data-trim data-noescape>
+src/
+├── app/
+│   ├── core/         # Guards, interceptors, services
+│   ├── features/     # Auth, Dashboard, Expenses, Groups, Profile, Settlements
+│   ├── shared/       # Layout, Navbar, Sidebar
+│   └── environments/ # Environment configs
+└── styles.scss       # Global Material theme
+          </code></pre>
+        </section>
+
+        <!-- Frontend Features -->
+        <section>
+          <h2>🌟 Key Frontend Features</h2>
+          <ul>
+            <li>🔐 Secure JWT Authentication</li>
+            <li>💳 Expense Tracking & History</li>
+            <li>👥 Group Management</li>
+            <li>💰 Smart Debt Settlements</li>
+            <li>📊 Real-time Dashboard</li>
+            <li>📱 Responsive Material UI</li>
+          </ul>
+        </section>
+
+        <!-- API Integration -->
+        <section>
+          <h2>🌐 API Integration</h2>
+          <ul>
+            <li>Connected to backend via <strong>API Gateway (8080)</strong></li>
+            <li>Microservices Ports: 8081–8084</li>
+            <li>JWT Interceptor + Auth Guards for route protection</li>
+            <li>Proxy handled via <code>proxy.conf.json</code></li>
+          </ul>
+        </section>
+
+        <!-- Theming -->
+        <section>
+          <h2>🎨 Theming & Responsiveness</h2>
+          <pre><code class="scss" data-trim data-noescape>
+@use '@angular/material' as mat;
+
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent:  mat.define-palette(mat.$pink-palette);
+          </code></pre>
+          <p><small>Responsive layout for mobile (320 px+), tablet (768 px+), and desktop (1024 px+).</small></p>
+        </section>
+
+        <!-- DevOps -->
+        <section>
+          <h2>🧠 DevOps & Observability</h2>
+          <ul>
+            <li>Automated builds & tests via <strong>GitHub Actions</strong></li>
+            <li><strong>Spring Actuator</strong> for health checks</li>
+            <li><strong>Zipkin</strong> for distributed tracing</li>
+            <li>Docker Compose orchestration for local CI</li>
+          </ul>
+        </section>
+
+        <!-- Future -->
+        <section>
+          <h2>🚀 Future Roadmap</h2>
+          <ul>
+            <li>Integrate Payment Gateway (Stripe / PayPal)</li>
+            <li>Deploy on AWS (ECS + RDS)</li>
+            <li>WebSocket Notifications</li>
+            <li>Multi-currency & Localization</li>
+          </ul>
+        </section>
+
+        <!-- Thank You -->
+        <section>
+          <h2>🙏 Thank You!</h2>
+          <p><strong>Dhruv Patel — Full Stack Java Developer (Toronto, ON)</strong></p>
+          <p>
+            <a href="mailto:dhruvp30.work@gmail.com">dhruvp30.work@gmail.com</a> |
+            <a href="https://github.com/Dhruv1030">github.com/Dhruv1030</a> |
+            <a href="https://dhruv-portfolio-qq2z.vercel.app/">Portfolio</a>
+          </p>
+          <p>💻 Project Repos:<br/>
+            <a href="https://github.com/Dhruv1030/SplitIt">Backend</a> | 
+            <a href="https://github.com/Dhruv1030/splitit-frontend">Frontend</a>
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="footer">SplitIt Presentation © 2025 Dhruv Patel</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'fade',
+        plugins: [RevealHighlight]
+      });
+    </script>
+  </body>
+</html>
