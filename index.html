@@ -17,6 +17,25 @@
         font-size: 0.6em;
         opacity: 0.5;
       }
+
+      section img {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+}
+
+.reveal section {
+  text-align: center;
+}
+
+/* Force UI showcase slide to start at the top */
+section[data-state="ui-showcase"] {
+  top: 0 !important;
+  transform: none !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+}
+
     </style>
   </head>
 
@@ -223,6 +242,29 @@ $accent:  mat.define-palette(mat.$pink-palette);
             <li>Multi-currency & Localization</li>
           </ul>
         </section>
+
+        <section data-state="ui-showcase" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; overflow-y: auto;">
+  <h2>🖼️ SplitIt UI Showcase</h2>
+  <p>Here are a few key screens from the Angular frontend:</p>
+
+  <img src="Login.png" alt="Login Page" width="70%"><br/>
+  <small>Login Page</small><br/><br/>
+
+  <img src="Dashboard.png" alt="Dashboard" width="70%"><br/>
+  <small>Dashboard Overview</small><br/><br/>
+
+  <img src="Groups.png" alt="Groups Page" width="70%"><br/>
+  <small>Group Management</small><br/><br/>
+
+  <img src="Expenses.png" alt="Expenses Page" width="70%"><br/>
+  <small>Expense List</small><br/><br/>
+
+  <img src="Settlements.png" alt="Settlements Page" width="70%"><br/>
+  <small>Settlement Summary</small><br/><br/>
+
+  <img src="Profile.png" alt="Profile Page" width="70%"><br/>
+  <small>Profile and Friends</small>
+</section>
 
         <!-- Thank You -->
         <section>
